@@ -1,0 +1,31 @@
+version: '3.7'
+
+services:
+  openldap:
+      image: osixia/openldap:1.5.0
+      container_name: openldap
+      domainname: "company.com"
+      hostname: "ldap-server"
+      environment:
+        LDAP_ORGANISATION: "My Company"
+        LDAP_DOMAIN: "company.com"
+        LDAP_ADMIN_PASSWORD: "passw0rd"
+        LDAP_CONFIG_PASSWORD: "passw0rd"
+        LDAP_TLS: false
+      ports:
+        - 389:389
+        - 636:636
+      restart: always
+      
+
+  phpLDAPadmin:
+      image: osixia/phpldapadmin:0.9.0
+      container_name: phpLDAPadmin
+      environment:
+        PHPLDAPADMIN_LDAP_HOSTS: "openldap"
+        PHPLDAPADMIN_HTTPS: "false"
+      ports:
+          - 8080:80 
+      restart: always
+      depends_on:
+        - openldap
