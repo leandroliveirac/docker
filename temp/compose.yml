@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+  teste:
+    image: ${DOCKER_REGISTRY}/homauth
+    environment:
+      JwtOptions__Secret: "b65779cc-2fb4-4ccb-9ae2-47f78895858f"
+      JwtOptions__ExpiracaoHoras: 2
+      JwtOptions__Emissor: "MeuSistema"
+      JwtOptions__ValidoEm: "https://localhost"
+      ConnectionStrings__strConnection: ${CONN_STR}
+    ports:
+    - 7229:443
+    - 5250:80
